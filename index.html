@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ТЭНҮҮН ИЖ ЖИМ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header/Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            color: #0066cc;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #0066cc, #004d99);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a:hover {
+            color: #0066cc;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .lang-btn, .contact-icon {
+            padding: 0.5rem 1rem;
+            background: none;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .lang-btn:hover, .contact-icon:hover {
+            background: #0066cc;
+            color: white;
+            border-color: #0066cc;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            height: 70vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23004d99" width="1200" height="600"/><path fill="%230066cc" opacity="0.5" d="M0 300 Q300 200 600 300 T1200 300 V600 H0 Z"/></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            max-width: 900px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .quote-carousel {
+            font-size: 1.3rem;
+            font-style: italic;
+            margin: 2rem 0;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quote {
+            display: none;
+            animation: fadeIn 1s ease;
+            line-height: 1.8;
+        }
+
+        .quote.active {
+            display: block;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 5rem 5%;
+            background: #f8f9fa;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #0066cc;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #0066cc, #004d99);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* About Section */
+        .about {
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #0066cc;
+        }
+
+        .about-text p {
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #0066cc, #004d99);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+        }
+        .about-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+       }
+
+        .about-image img {
+    width: 300px;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+        }
+
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 5%;
+            background: linear-gradient(135deg, #0066cc, #004d99);
+            color: white;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .quote-carousel {
+                font-size: 1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <div class="logo-icon">🚛</div>
+                <span>ТЭНҮҮН ИЖ ЖИМ</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Нүүр</a></li>
+                <li><a href="#services">Бидний тухай</a></li>
+                <li><a href="#about">Холбоо барих</a></li>
+                <li><a href="#contact">Санал хүсэлт</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="lang-btn">EN</button>
+                <button class="contact-icon">📞</button>
+                <button class="contact-icon">💬</button>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>ТЭНҮҮН ИЖ ЖИМ</h1>
+            <div class="quote-carousel">
+                <div class="quote active">"Бид таны ачааг найдвартай, хурдан шуурхай хүргэнэ."</div>
+                <div class="quote">"Авто тээврийн аюулгүй, баталгаатай үйлчилгээ."</div>
+                <div class="quote">"Таны ачаа — бидний хариуцлага."</div>
+                <div class="quote">"Дотоод болон олон улсын авто тээвэр."</div>
+                <div class="quote">"Чанартай тээвэр, найдвартай хамтын ажиллагаа."</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <h2 class="section-title">БИДНИЙ ЗАРЧИМ, ҮНЭТ ЗҮЙЛС, АЛСЫН ХАРАА</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🏭</div>
+                <h3>Алсын хараа</h3>
+                <p>Технологийн дэвшилтэт тээвэрт нэвтрүүлэх. Бид орчин үеийн технологийг ашиглан хамгийн сайн үйлчилгээг үзүүлдэг.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">👥</div>
+                <h3>Эрхэм зорилго</h3>
+                <p>Үйлчлүүлэгч бүрт өндөр хэмжээ мөрдлүүлэх. Бид харилцагчдынхаа сэтгэл ханамжийг эрхэмлэдэг.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">⚡</div>
+                <h3>Хурдан үйлчилгээ</h3>
+                <p>Цаг хугацааны үнэ цэнийг ойлгодог учраас бид хурдан бөгөөд найдвартай тээвэрлэлт хийдэг.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🛡️</div>
+                <h3>Аюулгүй байдал</h3>
+                <p>Таны ачааны аюулгүй байдал бидний хамгийн чухал зорилго юм. 100% баталгаатай тээвэрлэлт.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🌍</div>
+                <h3>Олон улсын тээвэр</h3>
+                <p>Дотоод болон олон улсын чиглэлд тээвэр үйлчилгээ үзүүлдэг. Хил дамнасан логистикийн туршлагатай.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💼</div>
+                <h3>Мэргэжлийн баг</h3>
+                <p>Туршлагатай, мэргэжлийн өндөр түвшний ажилчид таны ачааг хамгаалж хүргэнэ.</p>
+            </div>
+        </div>
+    </section>
+
+   <section class="about" id="about">
+    <div class="about-content">
+        <div class="about-text">
+            <h2>Бидний тухай</h2>
+            <p>ТЭНҮҮН ИЖ ЖИМ нь олон жилийн туршлагатай, Монгол улсын тээвэр логистикийн салбарт тэргүүлэгч компани юм.</p>
+            <p>Бид дотоод болон олон улсын чиглэлд бүх төрлийн ачаа тээвэрлэх үйлчилгээг өндөр чанар, аюулгүй байдлын түвшинд үзүүлж байна.</p>
+            <p>Манай зорилго бол харилцагч бүрт хамгийн сайн үйлчилгээг үзүүлэх, найдвартай түншлэлийг бий болгох явдал юм.</p>
+        </div>
+
+        <div class="about-image">
+            <img src="images/about.jpg" alt="Тээвэр логистикийн зураг">
+        </div>
+    </div>
+</section>
+
+
+    <section class="contact" id="contact">
+        <h2>Холбоо барих</h2>
+        <p>Та бидэнтэй дараах хаягаар холбогдоно уу эсвэл доорх формоор бидэнд захидал илгээнэ үү:</p>
+        <div class="contact-info">
+            <div class="contact-item">
+                <a href="tel:+976-99-16-38-43">📞 +976-99-16-38-43</a>
+            </div>
+            <div class="contact-item">
+                <a href="mailto:ranshintdetseg@gmail.com">✉️ ranshintdetseg@gmail.com</a>
+            </div>
+            <div class="contact-item">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ranshintdetseg@gmail.com" target="_blank" rel="noopener">✉️ Compose in Gmail</a>
+            </div>
+        </div>
+
+        <form id="contactForm" aria-label="Contact form" style="max-width:600px;margin:2rem auto;display:grid;gap:0.5rem">
+            <input type="text" id="cf_name" placeholder="Нэр" required style="padding:0.6rem;border-radius:6px;border:1px solid #ddd;">
+            <input type="email" id="cf_email" placeholder="И-мэйл" required style="padding:0.6rem;border-radius:6px;border:1px solid #ddd;">
+            <textarea id="cf_message" placeholder="Зурвас" required rows="5" style="padding:0.6rem;border-radius:6px;border:1px solid #ddd;"></textarea>
+            <div style="display:flex;gap:1rem;align-items:center">
+                <button type="submit" id="cf_send" class="change-logo-btn">Илгээх</button>
+                <div id="cf_status" aria-live="polite" style="font-size:0.95rem;color:#0066cc"></div>
+            </div>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 ТЭНҮҮН ИЖ ЖИМ. Бүх эрх хуулиар хамгаалагдсан.</p>
+    </footer>
+
+    <script>
+     
+        const translations = {
+            mn: {
+                nav: ['Нүүр', 'Бидний тухай', 'Холбоо барих', 'Санал хүсэлт'],
+                heroTitle: 'ТЭНҮҮН ИЖ ЖИМ',
+                quotes: [
+                    '"Бид таны ачааг найдвартай, хурдан шуурхай хүргэнэ."',
+                    '"Авто тээврийн аюулгүй, баталгаатай үйлчилгээ."',
+                    '"Таны ачаа — бидний хариуцлага."',
+                    '"Дотоод болон олон улсын авто тээвэр."',
+                    '"Чанартай тээвэр, найдвартай хамтын ажиллагаа."'
+                ],
+                servicesTitle: 'БИДНИЙ ЗАРЧИМ, ҮНЭТ ЗҮЙЛС, АЛСЫН ХАРАА',
+                services: [
+                    { title: 'Алсын хараа', desc: 'Технологийн дэвшилтэт тээвэрт нэвтрүүлэх. Бид орчин үеийн технологийг ашиглан хамгийн сайн үйлчилгээг үзүүлдэг.' },
+                    { title: 'Эрхэм зорилго', desc: 'Үйлчлүүлэгч бүрт өндөр хэмжээ мөрдлүүлэх. Бид харилцагчдынхаа сэтгэл ханамжийг эрхэмлэдэг.' },
+                    { title: 'Хурдан үйлчилгээ', desc: 'Цаг хугацааны үнэ цэнийг ойлгодог учраас бид хурдан бөгөөд найдвартай тээвэрлэлт хийдэг.' },
+                    { title: 'Аюулгүй байдал', desc: 'Таны ачааны аюулгүй байдал бидний хамгийн чухал зорилго юм. 100% баталгаатай тээвэрлэлт.' },
+                    { title: 'Олон улсын тээвэр', desc: 'Дотоод болон олон улсын чиглэлд тээвэр үйлчилгээ үзүүлдэг. Хил дамнасан логистикийн туршлагатай.' },
+                    { title: 'Мэргэжлийн баг', desc: 'Туршлагатай, мэргэжлийн өндөр түвшний ажилчид таны ачааг хамгаалж хүргэнэ.' }
+                ],
+                aboutTitle: 'Бидний тухай',
+                aboutText: [
+                    'ТЭНҮҮН ИЖ ЖИМ нь олон жилийн туршлагатай, Монгол улсын тээвэр логистикийн салбарт тэргүүлэгч компани юм.',
+                    'Бид дотоод болон олон улсын чиглэлд бүх төрлийн ачаа тээвэрлэх үйлчилгээг өндөр чанар, аюулгүй байдлын түвшинд үзүүлж байна.',
+                    'Манай зорилго бол харилцагч бүрт хамгийн сайн үйлчилгээг үзүүлэх, найдвартай түншлэлийг бий болгох явдал юм.'
+                ],
+                contactTitle: 'Холбоо барих',
+                contactSubtitle: 'Та бидэнтэй дараах хаягаар холбогдоно уу:',
+                footer: 'Бүх эрх хуулиар хамгаалагдсан.'
+            },
+            en: {
+                nav: ['Home', 'About Us', 'Contact', 'Feedback'],
+                heroTitle: 'TENUUN IJ JIM',
+                quotes: [
+                    '"We deliver your cargo reliably and quickly."',
+                    '"Safe and guaranteed auto transportation service."',
+                    '"Your cargo — our responsibility."',
+                    '"Domestic and international auto transport."',
+                    '"Quality transport, reliable partnership."'
+                ],
+                servicesTitle: 'OUR PRINCIPLES, VALUES, AND VISION',
+                services: [
+                    { title: 'Vision', desc: 'Introducing advanced transportation technology. We provide the best service using modern technology.' },
+                    { title: 'Mission', desc: 'Maintaining high standards for every client. We prioritize customer satisfaction.' },
+                    { title: 'Fast Service', desc: 'Understanding the value of time, we provide fast and reliable transportation.' },
+                    { title: 'Safety', desc: 'The safety of your cargo is our top priority. 100% guaranteed transportation.' },
+                    { title: 'International Transport', desc: 'We provide transport services domestically and internationally. Experienced in cross-border logistics.' },
+                    { title: 'Professional Team', desc: 'Experienced, highly professional staff protect and deliver your cargo.' }
+                ],
+                aboutTitle: 'About Us',
+                aboutText: [
+                    'TENUUN IJ JIM is a leading company in Mongolia\'s transportation and logistics sector with many years of experience.',
+                    'We provide cargo transportation services of all types, both domestically and internationally, at high quality and safety standards.',
+                    'Our goal is to provide the best service to every client and build reliable partnerships.'
+                ],
+                contactTitle: 'Contact Us',
+                contactSubtitle: 'Please contact us at the following address:',
+                footer: 'All rights reserved.'
+            }
+        };
+
+        let currentLang = 'mn';
+
+        function switchLanguage() {
+            currentLang = currentLang === 'mn' ? 'en' : 'mn';
+            const t = translations[currentLang];
+
+           
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach((link, i) => {
+                link.textContent = t.nav[i];
+            });
+
+            const langBtn = document.querySelector('.lang-btn');
+            langBtn.innerHTML = currentLang === 'mn' ? '🇬🇧 EN' : '🇲🇳 MN';
+
+         
+            document.querySelector('.hero h1').textContent = t.heroTitle;
+            document.querySelector('.logo span').textContent = t.heroTitle;
+
+            
+            const quoteElements = document.querySelectorAll('.quote');
+            quoteElements.forEach((quote, i) => {
+                quote.textContent = t.quotes[i];
+            });
+
+            // Update services section
+            document.querySelector('.services .section-title').textContent = t.servicesTitle;
+            const serviceCards = document.querySelectorAll('.service-card');
+            serviceCards.forEach((card, i) => {
+                card.querySelector('h3').textContent = t.services[i].title;
+                card.querySelector('p').textContent = t.services[i].desc;
+            });
+
+            // Update about section
+            document.querySelector('.about h2').textContent = t.aboutTitle;
+            const aboutPs = document.querySelectorAll('.about-text p');
+            aboutPs.forEach((p, i) => {
+                p.textContent = t.aboutText[i];
+            });
+
+            // Update contact section
+            document.querySelector('.contact h2').textContent = t.contactTitle;
+            document.querySelector('.contact > p').textContent = t.contactSubtitle;
+
+            // Update footer
+            document.querySelector('footer p').innerHTML = `&copy; 2024 ${t.heroTitle}. ${t.footer}`;
+        }
+
+        document.querySelector('.lang-btn').addEventListener('click', switchLanguage);
+
+        // Quote carousel
+        const quotes = document.querySelectorAll('.quote');
+        let currentQuote = 0;
+
+        function showNextQuote() {
+            quotes[currentQuote].classList.remove('active');
+            currentQuote = (currentQuote + 1) % quotes.length;
+            quotes[currentQuote].classList.add('active');
+        }
+
+        setInterval(showNextQuote, 4000);
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+       
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.service-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Contact form handler
+        const contactForm = document.getElementById('contactForm');
+        const cfStatus = document.getElementById('cf_status');
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                cfStatus.textContent = 'Илгээж байна...';
+                const payload = {
+                    name: document.getElementById('cf_name').value.trim(),
+                    email: document.getElementById('cf_email').value.trim(),
+                    message: document.getElementById('cf_message').value.trim()
+                };
+                try {
+                    const res = await fetch('/api/contact', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!res.ok) throw new Error('Network response was not ok');
+                    const data = await res.json();
+                    if (data.success) {
+                        cfStatus.textContent = 'Амжилттай илгээлээ. Бид удахгүй хариу өгнө.';
+                        contactForm.reset();
+                    } else {
+                        cfStatus.textContent = 'Амжилтгүй боллоо. Дахин оролдоно уу.';
+                    }
+                } catch (err) {
+                    console.error(err);
+                    cfStatus.textContent = 'Алдаа гарлаа. Серверийг шалгана уу.';
+                }
+                setTimeout(() => { cfStatus.textContent = ''; }, 6000);
+            });
+        }
+    </script>
+</body>
+</html>
